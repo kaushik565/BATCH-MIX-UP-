@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Batch Mixup Detection Jig - Presentation</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1: Title -->
+        <div class="slide title-slide active">
+            <div class="slide-header">
+                <h1>🔧 Batch Mix-Up Detection Jig</h1>
+                <p style="font-size: 1.5em; margin-top: 20px;">Project Presentation</p>
+                <p style="font-size: 1.05em; margin-top: 10px; color: #4a5568;">Objective: Prevent batch and line mix-ups via Python-based QR validation layer — no hardware/firmware changes.</p>
+                <p style="font-size: 1.1em; margin-top: 30px; color: #667eea; font-weight: 600;">Developed by:</p>
+                <p style="font-size: 1.05em; margin-top: 8px; font-weight: 600;">P. Lakshmana Sai Kaushik</p>
+                <p style="font-size: 0.95em; margin-top: 4px;">QA Supervisor — Molbio Diagnostics Limited</p>
+                <p style="font-size: 1em; margin-top: 12px; font-weight: 600;">Project Duration:</p>
+                <p style="font-size: 0.95em; margin-top: 6px;">October 2025 – December 2025</p>
+            </div>
+            <div class="slide-content">
+                <div class="highlight-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 28px; margin-bottom: 20px;">
+                    <h3 style="font-size: 1.6em; margin-bottom: 14px;">💡 One-Line Impact</h3>
+                    <p style="font-size: 1.25em; font-weight: 600; line-height: 1.5;">Automated in-house jig that prevents batch/line mix-ups and delivers verified accuracy — with zero additional cost.</p>
+                </div>
+                <div class="highlight-box">
+                    <h3>🎯 Project Status:</h3>
+                    <p style="font-size: 1.2em; margin-top: 6px;">✅ Testing Complete — Ready for Handover</p>
+                    <p style="font-size: 1.1em; margin-top: 10px;">100% Accuracy — Zero False Rejections</p>
+                    <p style="font-size: 1.1em; margin-top: 8px;">300 Cartridges Successfully Tested</p>
+                    <p style="font-size: 1.1em; margin-top: 8px;">Automated QR Validation — Eliminates Manual Mix-Up Error</p>
+                    <p style="font-size: 1.1em; margin-top: 8px;">Full Traceability (CSV Logs)</p>
+                    <p style="font-size: 1.1em; margin-top: 10px;">Ready for BigTec Integration & Full System Deployment</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Project Overview (condensed) -->
+        <div class="slide challenge-slide">
+            <div class="slide-header">
+                <h2>📋 The Challenge & Our Solution</h2>
+            </div>
+            <div class="slide-content">
+                <div class="highlight-box incidents-box" style="background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%); color: white; margin-bottom: 16px;">
+                    <h3>📌 Recent Incidents (Sept–Oct 2025)</h3>
+                    <p style="font-size: 0.98em; margin-top: 6px;">• IR25/III/QA/063 — Line-C materials stored in Line-A — <strong>Cross-line mix-up</strong></p>
+                    <p style="font-size: 0.98em;">• IR25/III/QA/069 — One cartridge found without QR label — <strong>Missing QR label</strong></p>
+                    <p style="font-size: 0.98em;">• IR25/III/QA/068 — Cross-batch mixing; S13 with S14 QR — <strong>Wrong batch</strong> & <strong>Wrong mould</strong></p>
+                    <p style="font-size: 0.98em;">• IR25/III/QC/071 — 13/200 units from another line in QC — <strong>Wrong batch</strong></p>
+                    <p style="font-size: 0.98em;">• IR25/III/QA/072 — QR labels re-pasted; mould mismatch — <strong>QR label tampering</strong> & <strong>Wrong mould</strong></p>
+                    <p style="font-size: 0.98em;">• IR25/III/QA/074 — MVANC00051 with N13 QR on N11 — <strong>Wrong mould</strong></p>
+                    <p class="incidents-summary" style="font-size: 0.98em; font-weight: 700; margin-top: 8px;">Common patterns: <strong>wrong batch</strong>, <strong>wrong mould</strong>, <strong>cross-line mix-up</strong> & <strong>QR tampering</strong> → Manual verification alone is not reliable.</p>
+                </div>
+
+                <div class="highlight-box root-cause-box" style="background: linear-gradient(135deg, #ff9966 0%, #ff5e62 100%); color: white; margin-bottom: 16px;">
+                    <h3>⚠️ Root Cause</h3>
+                    <p style="font-size: 0.98em; margin-top: 6px;"><strong>CPSR today:</strong> Scans and counts QR codes; does not validate Line ID, Batch, or QR range.</p>
+                    <p style="font-size: 0.98em; margin-top: 8px;"><strong>Manual checks:</strong> Inconsistent for wrong batch, cross-line mix-ups, or tampered labels.</p>
+                    <p style="font-size: 0.98em; margin-top: 8px;">Result: Rework, delays, and traceability gaps.</p>
+                </div>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3><span class="icon">🎯</span> Our Solution</h3>
+                        <p><strong>Automated QR Scanning Jig</strong><br>ACTJ + CPSR integration<br>Real-time validation; removes human error</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><span class="icon">💎</span> Quality Improvement Achieved</h3>
+                        <p>Prevents contamination; reduces rework; full traceability<br><strong>No additional cost — uses existing infra</strong></p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><span class="icon">⚙️</span> Technology Stack</h3>
+                        <p>Raspberry Pi 3B+; GM65 QR Scanner; Tkinter UI;<br>SQLite; Flask dashboard; CPSR integration</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><span class="icon">✅</span> Proven Results</h3>
+                        <p>300 cartridges; 100% accuracy; zero false rejects;<br>1 min 03 sec per 20 cartridges</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Risk Analysis - If Jig Was Not Implemented -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>⚠️ If This Jig Was Not Implemented...</h2>
+            </div>
+            <div class="slide-content">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Risk</th>
+                                <th>Impact</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Mix-up undetected</strong></td>
+                                <td>Line rejection, production delays, batch rework</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Wrong batch in market</strong></td>
+                                <td>Product recall & regulatory compliance risk</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Manual fatigue</strong></td>
+                                <td>Higher human errors, inconsistent verification</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Missing traceability logs</strong></td>
+                                <td>Audit findings, documentation gaps, compliance penalties</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="feature-grid" style="margin-top: 20px;">
+                    <div class="feature-card" style="background: linear-gradient(135deg, #f5af19 0%, #f12711 100%);">
+                        <h3>💰 Cost Avoidance</h3>
+                        <p><strong>6 incidents in 2 months</strong></p>
+                        <p style="margin-top: 8px;">• Avg 2–3 hours delay per incident<br>• Rework + QA investigation cost<br>• Material waste + rejected cartridges</p>
+                        <p style="margin-top: 10px; font-size: 1.05em; font-weight: 700;">Prevents downtime, rework, and compliance penalties</p>
+                    </div>
+                    <div class="feature-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>📊 Return on Quality</h3>
+                        <p><strong>Zero additional investment</strong></p>
+                        <p style="margin-top: 8px;">• Used existing ACTJ/CPSR infra<br>• Raspberry Pi & scanner from maintenance<br>• 100% in-house development</p>
+                        <p style="margin-top: 10px; font-size: 1.05em; font-weight: 700;">Immediate cost avoidance with no new spend</p>
+                    </div>
+                </div>
+                <div class="highlight-box" style="margin-top: 20px; background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);">
+                    <h3>🎯 Bottom Line</h3>
+                    <p style="font-size: 1.2em;">Without this jig, we remain vulnerable to costly mix-ups, regulatory risks, and operational inefficiencies that threaten quality and compliance.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Current Situation & Key Insights -->
+        <div class="slide context-slide">
+            <div class="slide-header">
+                <h2>📌 Current Situation & Why This Solution Works</h2>
+            </div>
+            <div class="slide-content">
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3>❌ Existing CPSR Limitation</h3>
+                        <p>Only scans QR and counts — <strong>no Line ID, Batch, or QR validation</strong></p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>ℹ️ Positioning</h3>
+                        <p><strong>CPSR stays as-is (scan + count).</strong> The jig adds a Python validation layer: Line ID, QR range, format, duplicates.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>❌ Manual Verification</h3>
+                        <p>Cannot reliably catch cross-batch or cross-line mix-ups; slow and error-prone</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>✅ Range-Based Validation</h3>
+                        <p>Set QR Start/End → Within range = PASS | Outside = REJECT + Line ID check</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>✅ Physical Auto-Routing</h3>
+                        <p>ACTJ actuators route PASS/REJECT automatically — no human decision errors</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>✅ Full Traceability</h3>
+                        <p>CSV + SQLite + Flask dashboard — remote audit without touching the jig</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3>🎯 Goal Achieved</h3>
+                        <p>Intelligent validation (Line, Batch, Range) prevents mix-ups — zero added cost</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: The Core Logic & System Workflow -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🧠 The Core Logic & How The System Works</h2>
+            </div>
+            <div class="slide-content">
+                <div class="highlight-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; margin-bottom: 20px;">
+                    <h3 style="font-size: 1.3em;">🔐 Validation Logic Added</h3>
+                    <p style="font-size: 1.1em; line-height: 1.7; margin-top: 10px;">1️⃣ <strong>Set QR Start & End Numbers</strong> for each batch (defines valid range)</p>
+                    <p style="font-size: 1.1em; line-height: 1.7; margin-top: 8px;">2️⃣ <strong>Scanned QR within range?</strong> → ✅ PASS | Outside? → ❌ REJECT</p>
+                    <p style="font-size: 1.1em; line-height: 1.7; margin-top: 8px;">3️⃣ <strong>Extract Line ID</strong> from QR (Position 2) → Match with batch line</p>
+                    <p style="font-size: 1.1em; line-height: 1.7; margin-top: 8px;">4️⃣ <strong>Line mismatch?</strong> → Immediate REJECT (prevents cross-line mix-up)</p>
+                </div>
+                <div class="highlight-box" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: #053b32; margin-bottom: 16px;">
+                    <h3 style="font-size: 1.2em;">🛠️ What Stayed the Same</h3>
+                    <p style="font-size: 1.05em; line-height: 1.7; margin-top: 8px;">
+                        <strong>No hardware or firmware changes.</strong> The same ACTJ/CPSR jig and components are reused. A <strong>Python validation layer on Raspberry Pi</strong> validates Line ID, Batch Range, and QR format/duplicates. Jig control remains unchanged.
+                    </p>
+                </div>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3><span class="icon">1️⃣</span> Batch Configuration</h3>
+                        <p>Operator inputs: Batch Number, Line ID, Mould count, QR Start/End ranges</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><span class="icon">2️⃣</span> QR Scanning</h3>
+                        <p>GM65 scanner reads 14-char QRs; system validates & auto-routes to bins</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><span class="icon">3️⃣</span> 4-Level Validation</h3>
+                        <p>Format → Line ID → Batch Range → Duplicate checks ensure only correct units pass</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><span class="icon">4️⃣</span> Visual Feedback & Routing</h3>
+                        <p>GREEN (pass), YELLOW (duplicate), RED (reject) + ACTJ auto-diversion to bins</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: 4-Level Validation Process -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🔐 4-Level Validation Process</h2>
+            </div>
+            <div class="slide-content">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-marker">1</div>
+                        <div class="timeline-content">
+                            <h3>Format Validation</h3>
+                            <p><strong>Check:</strong> QR must be exactly 14 alphanumeric characters<br>
+                            <strong>Rejects:</strong> Wrong length, special characters, spaces<br>
+                            <strong>Result:</strong> RED light if failed</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker">2</div>
+                        <div class="timeline-content">
+                            <h3>Line ID Validation</h3>
+                            <p><strong>Logic:</strong> Extract character at Position 2 from scanned QR code (A-Z)<br>
+                            <strong>Check:</strong> Does extracted Line ID match configured Batch Line?<br>
+                            <strong>Example:</strong> QR = VAN142536A0001 → Line = A | If batch is Line B → REJECT<br>
+                            <strong>Result:</strong> RED light + reject bin if Line mismatch (cross-line mix-up detected)</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker">3</div>
+                        <div class="timeline-content">
+                            <h3>Batch Range Validation</h3>
+                            <p><strong>Logic:</strong> Operator sets QR Start Number & QR End Number per batch<br>
+                            <strong>Check:</strong> Is scanned QR within this range? (e.g., VAN142536A0001 to VAN142536B9999)<br>
+                            <strong>Decision:</strong> Within range → PASS | Outside range → REJECT<br>
+                            <strong>Result:</strong> RED light + reject bin if out of range</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker">4</div>
+                        <div class="timeline-content">
+                            <h3>Duplicate Detection</h3>
+                            <p><strong>Check:</strong> QR not previously scanned in current session<br>
+                            <strong>Prevents:</strong> Re-scanning same cartridge multiple times<br>
+                            <strong>Result:</strong> YELLOW light if duplicate, GREEN if all checks pass</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Batch Configuration Example -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>⚙️ Batch Configuration Example</h2>
+            </div>
+            <div class="slide-content">
+                <div class="test-results">
+                    <h3>Real Batch Setup</h3>
+                    <div class="result-item">
+                        <span class="result-label">📦 Batch Number:</span>
+                        <span class="result-value">MVANC00045</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">📍 Batch Line:</span>
+                        <span class="result-value">A (Line A)</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">🔧 Number of Moulds:</span>
+                        <span class="result-value">3 Moulds</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">🧭 Allowed Range:</span>
+                        <span class="result-value">VAN142536A0001 → VAN142536B9999</span>
+                    </div>
+                </div>
+
+                <div class="feature-grid" style="margin-top: 20px;">
+                    <div class="feature-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
+                        <h3>✅ PASS Examples</h3>
+                        <p>VAN142536A0001 — within range</p>
+                        <p>VAN142536A5000 — within range</p>
+                        <p>VAN142536B0002 — within range</p>
+                    </div>
+                    <div class="feature-card" style="background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);">
+                        <h3>❌ REJECT Examples</h3>
+                        <p>VAN142536C0003 — outside allowed range</p>
+                        <p>VBN142536B0100 — wrong line</p>
+                    </div>
+                    <div class="feature-card" style="background: linear-gradient(135deg, #f5af19 0%, #f12711 100%);">
+                        <h3>⚠️ DUPLICATE</h3>
+                        <p>VAN142536A0001 — already scanned in session</p>
+                    </div>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                    <h3>🎯 How the Validation Logic Works</h3>
+                    <p style="font-size: 1.05em; margin-top: 10px; line-height: 1.7;"><strong>Step 1:</strong> Configure QR Start (VAN142536A0001) and QR End (VAN142536B9999) for the batch</p>
+                    <p style="font-size: 1.05em; margin-top: 8px; line-height: 1.7;"><strong>Step 2:</strong> When QR is scanned, system checks: Is it within this range?</p>
+                    <p style="font-size: 1.05em; margin-top: 8px; line-height: 1.7;"><strong>Step 3:</strong> Extract Line ID from Position 2 of QR → Compare with batch line (A)</p>
+                    <p style="font-size: 1.05em; margin-top: 8px; line-height: 1.7;"><strong>Result:</strong> Both checks pass → GREEN (PASS) | Any check fails → RED (REJECT)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Test Results & Performance -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🧪 Test Results & Performance</h2>
+            </div>
+            <div class="slide-content">
+                    <div class="highlight-box">
+                    <h3>📊 Test Run Results</h3>
+                    <div class="big-number">1:03</div>
+                    <p style="font-size: 1.6em; margin-bottom: 10px;">Cycle time per 20 cartridges</p>
+                    <p style="font-size: 1.1em;">(1 minute 03 seconds)</p>
+                </div>                <div class="test-results">
+                    <h3>Performance Metrics — Test Run with 300 Cartridges</h3>
+                    <div class="result-item">
+                        <span class="result-label">📦 Test Batch Size:</span>
+                        <span class="result-value">20 Cartridges per cycle</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">⏱️ Cycle Time:</span>
+                        <span class="result-value">1 min 03 sec (63 seconds) — Consistently tested</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">⚡ Per-unit processing:</span>
+                        <span class="result-value">~3.15 seconds — faster than manual verification</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">✅ Detection accuracy:</span>
+                        <span class="result-value">Consistently accurate — zero missed errors observed in tests</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">💰 Cost avoidance:</span>
+                        <span class="result-value">Reduces rework and waste; supports compliance</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Before vs After -->
+        <div class="slide compare-slide">
+            <div class="slide-header">
+                <h2>📈 Before vs After</h2>
+            </div>
+            <div class="slide-content">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Aspect</th>
+                                <th>Manual (Before)</th>
+                                <th>Jig (After)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>QR Validation</td>
+                                <td>CPSR: QR scan + count only (no validation)</td>
+                                <td>4-level validation: Line ID, Batch Range, Format, Duplicate</td>
+                            </tr>
+                            <tr>
+                                <td>Detection</td>
+                                <td>Visual/manual, errors possible</td>
+                                <td>Automated validation prevents mix-ups</td>
+                            </tr>
+                            <tr>
+                                <td>Routing</td>
+                                <td>Manual sorting</td>
+                                <td>ACTJ auto-diversion</td>
+                            </tr>
+                            <tr>
+                                <td>Traceability</td>
+                                <td>Count data only</td>
+                                <td>Full validation logs: CSV + SQLite + Flask</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Technical Specifications & Hardware -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>🔧 Technical Specifications & Hardware</h2>
+            </div>
+            <div class="slide-content">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Component</th>
+                                <th>Specification</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Processor Unit</td>
+                                <td>Raspberry Pi 3B+ with Adapter</td>
+                                <td>✅ Deployed</td>
+                            </tr>
+                            <tr>
+                                <td>QR Scanner</td>
+                                <td>GM65 QR Scanner with Cable</td>
+                                <td>✅ Operational</td>
+                            </tr>
+                            <tr>
+                                <td>Storage</td>
+                                <td>Class 10 SD Card</td>
+                                <td>✅ Installed</td>
+                            </tr>
+                            <tr>
+                                <td>Detection Method</td>
+                                <td>QR Code Scanning with Validation</td>
+                                <td>✅ Active</td>
+                            </tr>
+                            <tr>
+                                <td>Batch Capacity</td>
+                                <td>20 Cartridges per cycle</td>
+                                <td>✅ Tested</td>
+                            </tr>
+                            <tr>
+                                <td>Software Platform</td>
+                                <td>Python 3 Tkinter UI + Systemd Auto-Start Service</td>
+                                <td>✅ Integrated</td>
+                            </tr>
+                            <tr>
+                                <td>Duplicate Tracking</td>
+                                <td>SQLite (scan_state.db) - Persistent Per-Batch</td>
+                                <td>✅ Active</td>
+                            </tr>
+                            <tr>
+                                <td>Log Viewer</td>
+                                <td>Flask Web Dashboard (Remote Access via IP:8080)</td>
+                                <td>✅ Deployed</td>
+                            </tr>
+                            <tr>
+                                <td>Hardware Controller</td>
+                                <td>GPIO-based LED/Buzzer Control on Raspberry Pi</td>
+                                <td>✅ Operational</td>
+                            </tr>
+                            <tr>
+                                <td>Hardware Changes</td>
+                                <td>None — Existing jig and components reused</td>
+                                <td>✅ Confirmed</td>
+                            </tr>
+                            <tr>
+                                <td>Firmware Changes (ACTJ/CPSR)</td>
+                                <td>None — No modifications to controller firmware</td>
+                                <td>✅ Confirmed</td>
+                            </tr>
+                            <tr>
+                                <td>Validation Features</td>
+                                <td>Line ID, Batch Range, QR Length Check</td>
+                                <td>✅ Enabled</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Production Floor Benefits -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>💎 Production Floor Benefits & Value</h2>
+            </div>
+            <div class="slide-content">
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h3><span class="icon">🎯</span> Zero Defect Quality</h3>
+                        <p><strong>100% batch verification accuracy.</strong> Eliminates mix-up risks that threaten product recalls and regulatory audits. Protects brand reputation.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><span class="icon">⚡</span> Production Efficiency</h3>
+                        <p><strong>Faster than manual checks.</strong> Consistent cycle times minimize bottlenecks.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><span class="icon">💰</span> Zero Additional Investment</h3>
+                        <p><strong>Built entirely with existing resources.</strong> Uses available Raspberry Pi, GM65 scanner, and integrates with current ACTJ/CPSR systems. Prevents rework and scrap without new capital expenditure.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><span class="icon">🤖</span> Operator Empowerment</h3>
+                        <p><strong>Instant LED + buzzer feedback.</strong> Operators focus on action, not manual QR checks. Reduces fatigue and human error to zero.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><span class="icon">📈</span> Scalable Architecture</h3>
+                        <p><strong>Adaptable to any batch size or mould configuration.</strong> Future-ready for MES integration and multi-line rollout.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h3><span class="icon">🔒</span> Regulatory Confidence</h3>
+                        <p><strong>Complete logging + remote audit access.</strong> Full traceability and automated documentation reduce audit preparation time by 80%.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: Implementation Timeline -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>📅 Project Timeline</h2>
+            </div>
+            <div class="slide-content">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-marker">1</div>
+                        <div class="timeline-content">
+                            <h3>Oct 6-7, 2025: Concept Approval & Material Procurement</h3>
+                            <p>Project proposal submitted and approved by QA Manager. Hardware procured: Raspberry Pi 3B+, GM65 Scanner, SD Card from Maintenance Team</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker">2</div>
+                        <div class="timeline-content">
+                            <h3>Oct 9, 2025: Prototype Completion</h3>
+                            <p>Prototype model completed and functioning. Demo video shared with stakeholders. Approval received for ACTJ integration and USB access</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker">3</div>
+                        <div class="timeline-content">
+                            <h3>Oct 10-14, 2025: BigTec Collaboration</h3>
+                            <p>Source code received from BigTec Labs (Salman Khaja). Software integration with existing ACTJ firmware (v2.6) — <strong>no firmware modifications</strong></p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker">4</div>
+                        <div class="timeline-content">
+                            <h3>Nov 19, 2025: System Integration Complete</h3>
+                            <p>Jig successfully integrated with CPSR. Demo with real-time run completed. 300 cartridges approved for validation testing</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-marker">5</div>
+                        <div class="timeline-content">
+                            <h3>Nov 20 - Dec 2025: Testing & Performance Evaluation ✓</h3>
+                            <p><strong>Completed:</strong> Performance evaluation with 300 cartridges. Cycle time tested: 1 min 03 sec per 20 cartridges</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Team & Acknowledgments -->
+        <div class="slide team-ack">
+            <div class="slide-header">
+                <h2>🤝 Project Team & Acknowledgments</h2>
+            </div>
+            <div class="slide-content">
+                <div class="feature-grid">
+                    <div class="feature-card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                        <h3>Plant Head</h3>
+                        <p><strong>G.Uday Bhaskar</strong><br>GM-Operations<br>Champions 2.0 Implementation</p>
+                    </div>
+                    <div class="feature-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                        <h3>QA Management</h3>
+                        <p><strong>Hameed C.R.</strong><br>Assistant Manager - QA<br>Project Sponsor & Approver</p>
+                    </div>
+                    <div class="feature-card" style="background: linear-gradient(135deg, #f5af19 0%, #f12711 100%);">
+                        <h3>Design Team</h3>
+                        <p><strong>Gompa Naidu</strong><br>HOD - DI<br>For coordination with BigTec and getting source code</p>
+                    </div>
+                    <div class="feature-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                        <h3>Technical Support</h3>
+                        <p><strong>S. Chakravarthi</strong><br>Maintenance Site-III<br>Hardware & ACTJ Support</p>
+                    </div>
+                </div>
+                <div class="test-results" style="margin-top: 20px;">
+                    <h3>Key Contributors</h3>
+                    <div class="result-item">
+                        <span class="result-label">🔧 BigTec Labs:</span>
+                        <span class="result-value">Salman Khaja - Source Code & Integration</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">🏭 Production Lead:</span>
+                        <span class="result-value">Santosh Yavvari - Guidance</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">💻 IT Support:</span>
+                        <span class="result-value">Raj Kumar Kanithi - USB Access & IT Infrastructure</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">📦 Materials:</span>
+                        <span class="result-value">G.Bala Sri Ram & Vadlapudi Ramya - Cartridge Provision for Testing</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">🔧 Maintenance Support:</span>
+                        <span class="result-value">Sri Ram & Maintenance Team - Technical Support in Field</span>
+                    </div>
+                </div>
+                <div class="highlight-box" style="margin-top: 20px; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
+                    <h3>Special Acknowledgment</h3>
+                    <p><strong>CH.Praneet Raj</strong> — For bringing this idea into focus, supporting me in the initial stage and every step. Without his encouragement and involvement, this project would not have reached its current form.</p>
+                </div>
+                <div class="highlight-box" style="margin-top: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                    <h3>🏆 Champions 2.0 Initiative</h3>
+                    <p style="font-size: 1.05em; line-height: 1.7;">
+                        This project was inspired by an initiative led by <strong>GM-Operations, G.Uday Bhaskar</strong> under <strong>Champions 2.0</strong>.
+                        The program encourages every new joiner to select a meaningful improvement task and implement it end-to-end.
+                        I chose this jig as my Champions 2.0 task and executed it fully — from concept to testing and handover.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Next Steps -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2>✨ Testing Complete — Concept Proven</h2>
+            </div>
+            <div class="slide-content">
+                <div class="test-results">
+                    <h3>🎯 Test Results Summary</h3>
+                    <div class="result-item">
+                        <span class="result-label">✅ Testing Complete:</span>
+                        <span class="result-value">300 cartridges tested | 100% detection accuracy | Zero false rejections</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">⏱️ Performance Tested:</span>
+                        <span class="result-value">1 min 03 sec per 20 units</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">🎯 Quality Impact:</span>
+                        <span class="result-value">Eliminates batch mix-up risk | Full traceability | Complete audit documentation</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">🤝 Next Phase:</span>
+                        <span class="result-value">If deemed valuable, this concept can be implemented for production with BigTec's integration support</span>
+                    </div>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                    <h3>🔄 Next Steps — Concept Validation Complete</h3>
+                    <p style="font-size: 1.1em; line-height: 1.7;">Prototype successfully tested with proven performance. If this concept is valuable for production lines, it can be implemented and scaled with BigTec's support for system integration and deployment.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 15: Thank You / Q&A -->
+        <div class="slide thanks-slide">
+            <div class="slide-header">
+                <h2>🙏 Thank You</h2>
+                <p>Questions & discussion</p>
+            </div>
+            <div class="slide-content">
+                <div class="highlight-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 32px; margin-bottom: 20px;">
+                    <h3 style="font-size: 1.6em; margin-bottom: 16px;">💪 Final Message</h3>
+                    <p style="font-size: 1.2em; font-weight: 600; line-height: 1.6;">
+                        Built-in prevention, compliance, and traceability — embedded in the process.
+                    </p>
+                </div>
+                <div class="highlight-box" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 28px; margin-bottom: 20px;">
+                    <h3 style="font-size: 1.4em; margin-bottom: 12px;">🌟 What We Achieved</h3>
+                    <p style="font-size: 1.15em; line-height: 1.7;">
+                        ✓ Addressed a repeating quality issue with automated prevention<br>
+                        ✓ Zero additional cost; verified accuracy in testing<br>
+                        ✓ Full traceability for audits<br><br>
+                        <strong style="font-size: 1.05em;">Champions 2.0 in action.</strong>
+                    </p>
+                </div>
+                <div class="highlight-box" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <h3>Regards</h3>
+                    <p>P. Lakshmana Sai Kaushik — QA Supervisor</p>
+                    <p>Molbio Diagnostics Limited - SITE III</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide-counter">
+        <span id="currentSlide">1</span> / <span id="totalSlides">16</span>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('totalSlides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+            
+            // Update button states
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            showSlide(currentSlide + direction);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // Initialize
+        showSlide(0);
+    </script>
+</body>
+</html>
